@@ -1,11 +1,9 @@
 package guru.springfamework.api.v1.mapper;
 
-import guru.springfamework.api.v1.model.CategoryDTO;
+import guru.springfamework.api.v1.model.category.CategoryDTO;
 import guru.springfamework.domain.Category;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class CategoryMapperTest {
 
