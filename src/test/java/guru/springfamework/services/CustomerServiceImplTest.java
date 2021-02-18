@@ -91,4 +91,26 @@ public class CustomerServiceImplTest {
         Assert.assertEquals(customerDTO.getFirstname(), savedDTO.getFirstname());
         Assert.assertEquals("/api/v1/customer/1",savedDTO.getCustomer_url());
     }
+
+    @Test
+    public void updateCustomer() {
+
+//        Given
+        CustomerDTO customer= new CustomerDTO();
+        customer.setFirstname(NAME);
+
+        Customer savedCustomer= new Customer();
+        savedCustomer.setFirstname(customer.getFirstname());
+        savedCustomer.setLastname(customer.getLastname());
+        savedCustomer.setId(ID);
+
+        Mockito.when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(savedCustomer);
+
+//        When
+        CustomerDTO updatedCustomer= customerService.updateCustomer(ID, customer);
+
+//        Then
+        Assert.assertEquals(customer.getFirstname(), updatedCustomer.getFirstname());
+        Assert.assertEquals("/api/v1/customer/1", updatedCustomer.getCustomer_url());
+    }
 }
