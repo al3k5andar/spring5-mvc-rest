@@ -52,12 +52,12 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void getCustomerByName() {
+    public void getCustomerById() {
 
 //        Given
         Customer customer= new Customer();
         customer.setId(ID);
-        customer.setFirstName(NAME);
+        customer.setFirstname(NAME);
 
 //        When
         Mockito.when(customerRepository.findById(ID)).thenReturn(Optional.of(customer));
@@ -66,6 +66,29 @@ public class CustomerServiceImplTest {
 
 //        Then
         Assert.assertEquals(ID, customerDTO.getId());
-        Assert.assertEquals(NAME, customerDTO.getFirstName());
+        Assert.assertEquals(NAME, customerDTO.getFirstname());
+    }
+
+    @Test
+    public void createNewCustomer() {
+
+//        Given
+        CustomerDTO customerDTO= new CustomerDTO();
+        customerDTO.setFirstname("Jim");
+        customerDTO.setId(1L);
+
+        Customer savedCustomer= new Customer();
+        savedCustomer.setFirstname(customerDTO.getFirstname());
+        savedCustomer.setLastname(customerDTO.getLastname());
+        savedCustomer.setId(customerDTO.getId());
+
+        Mockito.when(customerRepository.save(Mockito.any())).thenReturn(savedCustomer);
+
+//        When
+        CustomerDTO savedDTO= customerService.createNewCustomer(customerDTO);
+
+//        Then
+        Assert.assertEquals(customerDTO.getFirstname(), savedDTO.getFirstname());
+        Assert.assertEquals("/api/v1/customer/1",savedDTO.getCustomer_url());
     }
 }

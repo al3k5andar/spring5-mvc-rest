@@ -44,11 +44,11 @@ public class CustomerControllerTest {
 //        Given
         CustomerDTO jim= new CustomerDTO();
         jim.setId(2L);
-        jim.setFirstName("Jim");
+        jim.setFirstname("Jim");
 
         CustomerDTO joe= new CustomerDTO();
         joe.setId(ID);
-        joe.setFirstName(FIRST_NAME);
+        joe.setFirstname(FIRST_NAME);
 
         List<CustomerDTO> customerDTOList = Arrays.asList(joe, jim);
 
@@ -68,7 +68,7 @@ public class CustomerControllerTest {
 //        Given
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setId(ID);
-        customerDTO.setFirstName(FIRST_NAME);
+        customerDTO.setFirstname(FIRST_NAME);
 
 //        When
         Mockito.when(customerService.getCustomerById(ID)).thenReturn(customerDTO);
@@ -77,6 +77,34 @@ public class CustomerControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customers/1")
                 .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.firstName",Matchers.equalTo(FIRST_NAME)));
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.firstname",Matchers.equalTo(FIRST_NAME)));
+    }
+
+    @Test
+    public void createNewCustomer() throws Exception {
+
+//        Given
+        CustomerDTO customer= new CustomerDTO();
+        customer.setId(1L);
+        customer.setFirstname("Jim");
+        customer.setLastname("Simpson");
+
+        CustomerDTO savedCustomer= new CustomerDTO();
+        savedCustomer.setId(customer.getId());
+        savedCustomer.setFirstname(customer.getFirstname());
+        savedCustomer.setLastname(customer.getLastname());
+        savedCustomer.setCustomer_url("/api/v1/customer/1");
+
+//        When
+        Mockito.when(customerService.createNewCustomer(customer)).thenReturn(savedCustomer);
+
+//        Then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customers/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(AbstractRestControllerTest.asJsonString(customer)))
+                    .andExpect(MockMvcResultMatchers.status().isCreated())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.firstname",Matchers.equalTo("Jim")))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.customer_url",Matchers.equalTo("/api/v1/customer/1")));
+
     }
 }

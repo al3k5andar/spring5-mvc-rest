@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 public class CustomerDTO {
 
     private Long id;
-    private String firstName;
-    private String lastName;
+
+    private String firstname;
+
+    private String lastname;
+
     private String customer_url;
 }

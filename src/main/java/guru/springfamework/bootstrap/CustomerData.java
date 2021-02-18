@@ -10,18 +10,18 @@ public class CustomerData
     public static List<Customer> customers(){
         Customer jim= new Customer();
         jim.setId(1L);
-        jim.setFirstName("Jim");
-        jim.setLastName("Doe");
+        jim.setFirstname("Jim");
+        jim.setLastname("Doe");
 
         Customer joe= new Customer();
         joe.setId(2L);
-        joe.setFirstName("Joe");
-        joe.setLastName("Simpson");
+        joe.setFirstname("Joe");
+        joe.setLastname("Simpson");
 
         Customer bob= new Customer();
         bob.setId(3L);
-        bob.setFirstName("Bob");
-        bob.setLastName("Woo");
+        bob.setFirstname("Bob");
+        bob.setLastname("Woo");
 
         return Arrays.asList(jim,joe,bob);
     }
