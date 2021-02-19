@@ -1,7 +1,9 @@
 package guru.springfamework.controllers.v1;
 
 import guru.springfamework.api.v1.model.category.CategoryDTO;
+import guru.springfamework.controllers.RestResponseEntityExceptionHandler;
 import guru.springfamework.services.CategoryService;
+import guru.springfamework.services.ResourceNotFoundException;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +37,9 @@ public class CategoryControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        mockMvc= MockMvcBuilders.standaloneSetup(categoryController).build();
+        mockMvc= MockMvcBuilders.standaloneSetup(categoryController)
+                .setControllerAdvice(RestResponseEntityExceptionHandler.class)
+                .build();
     }
 
     @Test
@@ -56,7 +60,7 @@ public class CategoryControllerTest {
         Mockito.when(categoryService.getAllCategories()).thenReturn(categoryDTOList);
 
 //        Then
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories/")
+        mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.categories", Matchers.hasSize(2)));
@@ -74,9 +78,25 @@ public class CategoryControllerTest {
         Mockito.when(categoryService.getCategoryByName(Mockito.anyString())).thenReturn(joe);
 
 //        Then
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories/Joe")
+        mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL+ "/Joe")
                 .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.name",Matchers.equalTo(NAME)));
+    }
+
+    @Test
+    public void getCategoryByNameNotFound() throws Exception {
+
+//        Give
+        String name= "name";
+
+//        When
+        Mockito.when(categoryService.getCategoryByName(name)).thenThrow(ResourceNotFoundException.class);
+
+//        Then
+        mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL+ name)
+                .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(MockMvcResultMatchers.status().isNotFound());
+
     }
 }

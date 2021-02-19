@@ -22,7 +22,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO getCategoryByName(String name) {
+
         Category category= categoryRepository.findByName(name);
+        if(category== null)
+            throw new ResourceNotFoundException();
 
         return categoryMapper.categoryToCategoryDTO(category);
     }
