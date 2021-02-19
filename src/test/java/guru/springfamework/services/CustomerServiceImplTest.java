@@ -107,7 +107,7 @@ public class CustomerServiceImplTest {
         Mockito.when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(savedCustomer);
 
 //        When
-        CustomerDTO updatedCustomer= customerService.updateCustomer(ID, customer);
+        CustomerDTO updatedCustomer= customerService.saveCustomerByDTO(ID, customer);
 
 //        Then
         Assert.assertEquals(customer.getFirstname(), updatedCustomer.getFirstname());
