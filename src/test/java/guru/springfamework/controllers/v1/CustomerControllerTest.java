@@ -165,4 +165,21 @@ public class CustomerControllerTest {
                             Matchers.equalTo("/api/v1/customers/1")));
 
     }
+
+    @Test
+    public void deleteCustomer() throws Exception {
+
+//        Given
+        CustomerDTO customerDTO= new CustomerDTO();
+        customerDTO.setId(ID);
+        customerDTO.setFirstname(FIRST_NAME);
+
+//        When
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/customers/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+
+//        Then
+        Mockito.verify(customerService,Mockito.times(1)).deleteCustomer(Mockito.anyLong());
+    }
 }

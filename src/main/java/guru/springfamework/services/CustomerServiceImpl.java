@@ -78,4 +78,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         return savedDTO;
     }
+
+    @Override
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteById(id);
+    }
 }
