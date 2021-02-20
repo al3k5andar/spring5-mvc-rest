@@ -6,6 +6,7 @@ import guru.springfamework.bootstrap.Bootstrap;
 import guru.springfamework.domain.Customer;
 import guru.springfamework.repositories.CategoryRepository;
 import guru.springfamework.repositories.CustomerRepository;
+import guru.springfamework.repositories.VendorRepository;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,6 +28,9 @@ public class CustomerServiceImplITTest {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    VendorRepository vendorRepository;
+
     CustomerService customerService;
 
 
@@ -36,7 +40,7 @@ public class CustomerServiceImplITTest {
         System.out.println(customerRepository.findAll().size());
 
 //        Loading data from Bootstrap class
-        Bootstrap data= new Bootstrap(categoryRepository,customerRepository);
+        Bootstrap data= new Bootstrap(categoryRepository,customerRepository, vendorRepository);
         data.run();
 
         customerService= new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
