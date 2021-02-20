@@ -77,6 +77,11 @@ public class VendorServiceImpl implements VendorService {
         return updatedVendor;
     }
 
+    @Override
+    public void deleteVendorById(Long id) {
+        vendorRepository.deleteById(id);
+    }
+
     private String getVendorUrl(Long id){
         return VendorController.BASE_URL+ "/" +id;
     }

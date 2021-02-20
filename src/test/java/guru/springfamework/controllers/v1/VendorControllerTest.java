@@ -163,4 +163,22 @@ public class VendorControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("$.vendor_url",
                             Matchers.equalTo(VendorController.BASE_URL+"/1")));
     }
+
+    @Test
+    public void deleteVendorById() throws Exception {
+
+//        Given
+        VendorDTO vendorDTO= new VendorDTO();
+        vendorDTO.setId(ID);
+        vendorDTO.setName(NAME);
+
+//        When
+        mockMvc.perform(MockMvcRequestBuilders.delete(VendorController.BASE_URL+ "/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(AbstractRestControllerTest.asJsonString(vendorDTO)))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+
+//        Then
+        Mockito.verify(vendorService).deleteVendorById(Mockito.any());
+    }
 }

@@ -121,4 +121,17 @@ public class VendorServiceImplTest {
         Assert.assertNotNull(returnedDto);
         Assert.assertEquals(vendorDTO.getName(),returnedDto.getName());
     }
+
+    @Test
+    public void deleteVendor() {
+
+//        Given
+        long id= ID;
+
+//        When
+        vendorService.deleteVendorById(id);
+
+//        Then
+        Mockito.verify(vendorRepository, Mockito.times(1)).deleteById(Mockito.anyLong());
+    }
 }
