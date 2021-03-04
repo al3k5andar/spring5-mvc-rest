@@ -60,6 +60,7 @@ public class VendorControllerTest {
 
 //        Then
         mockMvc.perform(MockMvcRequestBuilders.get(VendorController.BASE_URL)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(AbstractRestControllerTest.asJsonString(vendorDTOList)))
                     .andExpect(MockMvcResultMatchers.status().isOk())
@@ -80,6 +81,7 @@ public class VendorControllerTest {
 
 //        Then
         mockMvc.perform(MockMvcRequestBuilders.get(VendorController.BASE_URL+ "/1")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.name",Matchers.equalTo(NAME)))
@@ -101,6 +103,7 @@ public class VendorControllerTest {
 
 //        Then
         mockMvc.perform(MockMvcRequestBuilders.post(VendorController.BASE_URL)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(AbstractRestControllerTest.asJsonString(vendorDTO)))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -128,6 +131,7 @@ public class VendorControllerTest {
 
 //        Then
         mockMvc.perform(MockMvcRequestBuilders.put(VendorController.BASE_URL+ "/1")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(AbstractRestControllerTest.asJsonString(vendorDTO)))
                     .andExpect(MockMvcResultMatchers.status().isOk())
@@ -155,6 +159,7 @@ public class VendorControllerTest {
 
 //        Then
         mockMvc.perform(MockMvcRequestBuilders.patch(VendorController.BASE_URL+"/1")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(AbstractRestControllerTest.asJsonString(vendorDTO)))
                     .andExpect(MockMvcResultMatchers.status().isOk())

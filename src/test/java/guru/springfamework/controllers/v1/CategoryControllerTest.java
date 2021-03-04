@@ -61,6 +61,7 @@ public class CategoryControllerTest {
 
 //        Then
         mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.categories", Matchers.hasSize(2)));
@@ -79,6 +80,7 @@ public class CategoryControllerTest {
 
 //        Then
         mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL+ "/Joe")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.name",Matchers.equalTo(NAME)));
